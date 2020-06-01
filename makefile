@@ -35,7 +35,7 @@ CUDA_LINK_LIBS= -lcudart
 ## Project file structure ##
 
 # Colab base folder
-COLAB_DIR = /content/filtro_mediana
+COLAB_DIR = /content/dism_cuda_colab
 
 # Source file directory:
 SRC_DIR = $(COLAB_DIR)/src
@@ -63,19 +63,19 @@ OBJS = $(OBJ_DIR)/median.o $(OBJ_DIR)/EasyBMP.o
 # Link c++ and CUDA compiled object files to target executable:
 $(EXE) : $(OBJS)
 	$(CC) $(CC_FLAGS) $(OBJS) -o $@ $(CUDA_INC_DIR) $(CUDA_LIB_DIR) $(CUDA_LINK_LIBS)
-
+ 
 # Compile main .cpp file to object files:
-$(OBJ_DIR)/%.o : %.cpp
-	$(CC) $(CC_FLAGS) -c $< -o $@
+#$(OBJ_DIR)/%.o : %.cpp
+#	$(CC) $(CC_FLAGS) -c $< -o $@
 
 # Compile C++ source files to object files:
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp include/%.h
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
 	$(CC) $(CC_FLAGS) -c $< -o $@
 
 # Compile CUDA source files to object files:
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cu $(INC_DIR)/%.cuh
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cu
 	$(NVCC) $(NVCC_FLAGS) -c $< -o $@ $(NVCC_LIBS)
 
 # Clean objects in object directory.
 clean:
-	$(RM) bin/* *.o $(EXE)
+	rm -f $(OBJ_DIR)/* *.o $(EXE) 
