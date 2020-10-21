@@ -22,16 +22,6 @@
 //# Cabecera de la librería para tratamiento de bitmaps que usaremos.
 #include "/content/3dpl_cuda_colab/include/EasyBMP.h"
 
-//# Tipos y funciones varias para obtener tiempos de ejecución.
-//# NO MIRAR, DON'T WORRY BE HAPPY
-#if _WIN32
-	typedef LARGE_INTEGER timeStamp;
-	void getCurrentTimeStamp(timeStamp& _time);
-	timeStamp getCurrentTimeStamp();
-	double getTimeMili(const timeStamp& start, const timeStamp& end);
-	double getTimeSecs(const timeStamp& start, const timeStamp& end);
-#endif
-
 //# Funciones auxiliares
 double get_current_time();
 void checkCUDAError(const char*);
