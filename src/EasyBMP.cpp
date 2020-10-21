@@ -18,7 +18,7 @@
 *                                                *
 *************************************************/
 
-#include "/content/dism_cuda_colab/include/EasyBMP.h"
+#include "/content/3dpl_cuda_colab/include/EasyBMP.h"
 
 /* These functions are defined in EasyBMP.h */
 
