@@ -35,7 +35,7 @@ CUDA_LINK_LIBS= -lcudart
 ## Project file structure ##
 
 # Colab base folder
-COLAB_DIR = /content/dism_cuda_colab
+COLAB_DIR = /content/3dpl_cuda_colab
 
 # Source file directory:
 SRC_DIR = $(COLAB_DIR)/src
