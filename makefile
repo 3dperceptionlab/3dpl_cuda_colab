@@ -37,14 +37,17 @@ CUDA_LINK_LIBS= -lcudart
 # Colab base folder
 COLAB_DIR = /content/3dpl_cuda_colab
 
-# Source file directory:
+# Include header files diretory:
+INC_DIR = $(COLAB_DIR)/include
+
+# Source files directory:
 SRC_DIR = $(COLAB_DIR)/src
 
-# Object file directory:
-OBJ_DIR = $(COLAB_DIR)/bin
+# Object files directory:
+OBJ_DIR = $(COLAB_DIR)/obj
 
-# Include header file diretory:
-INC_DIR = $(COLAB_DIR)/include
+# Binary files directory:
+BIN_DIR = $(COLAB_DIR)/bin
 
 ##########################################################
 
@@ -53,16 +56,26 @@ INC_DIR = $(COLAB_DIR)/include
 # Target executable name:
 EXE = filtro_mediana
 
+# CPP source files:
+SRC_CPP	= $(wildcard $(SRC_DIR)/*.cpp)
+# CPP object files:
+_OBJS_CPP	= $(patsubst $(SRC_DIR)/%.cpp, %.o, $(SRC_CPP))
+OBJS_CPP	= $(addprefix $(OBJ_DIR)/, $(_OBJS_CPP))
+# CU source files
+SRC_CU	= $(wildcard $(SRC_DIR)/*.cu)
+# CU object files:
+_OBJS_CU	= $(patsubst $(SRC_DIR)/%.cu, %.o, $(SRC_CU))
+OBJS_CU	= $(addprefix $(OBJ_DIR)/, $(_OBJS_CU))
 # Object files:
-OBJS = $(OBJ_DIR)/median.o $(OBJ_DIR)/EasyBMP.o
+OBJS = $(OBJS_CPP) $(OBJS_CU)
 
 ##########################################################
 
 ## Compile ##
 
 # Link c++ and CUDA compiled object files to target executable:
-$(EXE) : $(OBJS)
-	$(CC) $(CC_FLAGS) $(OBJS) -o $@ $(CUDA_INC_DIR) $(CUDA_LIB_DIR) $(CUDA_LINK_LIBS)
+$(EXE) : $(OBJ_DIR) $(OBJS)
+	$(CC) $(CC_FLAGS) $(OBJS) -o $(EXE) $(CUDA_INC_DIR) $(CUDA_LIB_DIR) $(CUDA_LINK_LIBS)
  
 # Compile main .cpp file to object files:
 #$(OBJ_DIR)/%.o : %.cpp
@@ -78,4 +91,4 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cu
 
 # Clean objects in object directory.
 clean:
-	rm -f $(OBJ_DIR)/* *.o $(EXE) 
+	rm -f $(OBJ_DIR)/* *.o $(EXE)
